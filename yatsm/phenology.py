@@ -233,6 +233,9 @@ class LongTermMeanPhenology(object):
 
         # Mask out np.nan
         valid = np.isfinite(evi_norm)
+        if not np.any(valid):
+            logger.debug('No valid EVI in segment -- skipping')
+            return
         yeardoy = yeardoy[valid, :]
         evi_norm = evi_norm[valid]
 
@@ -307,6 +310,8 @@ class LongTermMeanPhenology(object):
             _result = self._fit_record(_evi, _yeardoy,
                                        self.year_interval,
                                        self.q_min, self.q_max)
+            if _result is None:
+                continue
 
             self.pheno[i]['spring_doy'] = _result[0]
             self.pheno[i]['autumn_doy'] = _result[1]
