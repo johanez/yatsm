@@ -9,6 +9,7 @@ See:
 from __future__ import division
 
 from datetime import datetime as dt
+import logging
 import math
 
 import numpy as np
@@ -23,6 +24,8 @@ rpy2.robjects.numpy2ri.activate()
 Rstats = importr('stats')
 
 from .vegetation_indices import EVI
+
+logger = logging.getLogger('yatsm')
 
 
 def group_years(years, interval=3):
